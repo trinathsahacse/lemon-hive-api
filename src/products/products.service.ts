@@ -21,4 +21,8 @@ export class ProductsService{
         const products = this.productModel.find()
         return products
     }
+    async findSingle(productId:string): Promise<Product> {
+        const product = this.productModel.findById(productId)
+        return product
+    }
 }

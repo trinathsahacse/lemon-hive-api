@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Post, Res, UploadedFile, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Get, HttpStatus, Param, Post, Res, UploadedFile, UseInterceptors } from "@nestjs/common";
 import { ProductsService } from "./products.service";
 import { Product } from "./schemas/product.schema";
 import { CreateProductDto } from "./dto/product.dto";
@@ -34,6 +34,14 @@ export class ProductsController{
         const products = await this.productService.findAll()
         return await res.status(HttpStatus.OK).json({
             data: products
+        })
+    }
+
+    @Get(':id')
+    async getProduct(@Res() res,@Param('id') id:string): Promise<Product>{
+        const product = await this.productService.findSingle(id)
+        return await res.status(HttpStatus.OK).json({
+            data: product
         })
     }
 }
